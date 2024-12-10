@@ -30,7 +30,7 @@ public class Table : MonoBehaviour
 
     public void SetOutlineBool(bool value)
     {
-        if(value == isOutlined || isCamera)
+        if (value == isOutlined || isCamera)
         {
             return;
         }
@@ -47,15 +47,29 @@ public class Table : MonoBehaviour
     {
         if (isOutlined && !isCamera)
         {
-            virtualCamera.SetActive(true);
-            isCamera = true;
-            isOutlined = false;
-            outline.enabled = false;
+            StartCoroutine(WatchingTable(true));
         }
         else if (isCamera)
         {
-            virtualCamera.SetActive(false);
-            isCamera = false;
+            StartCoroutine(WatchingTable(false));
+        }
+    }
+
+    IEnumerator WatchingTable(bool _bool)
+    {
+        virtualCamera.SetActive(_bool);
+        if (!_bool)
+        {
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        isCamera = _bool;
+
+        if (_bool)
+        {
+            isOutlined = false;
+            outline.enabled = false;
+            yield return new WaitForSeconds(0.5f);
         }
     }
 }

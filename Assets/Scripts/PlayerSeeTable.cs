@@ -1,59 +1,90 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class PlayerSeeTable : MonoBehaviour
 {
-    [SerializeField] float rayLength = 3f; // Longueur du rayon
-    [SerializeField] LayerMask layerMask; // Masque de collision
-    private Table lastHitTable;
+    [SerializeField] float rayLengthTable = 3f; // Longueur du rayon
+    [SerializeField] float rayLengthFood = 3f; // Longueur du rayon
+
+
+
+    [SerializeField] LayerMask layerMaskTable; // Masque de collision
+    [SerializeField] LayerMask layerMaskFood; // Masque de collision
+
+
+
+
+    private Outlining lastOutliningItem;
 
     void FixedUpdate()
     {
-        Vector3 rayDirection = transform.forward;
 
-        RaycastHit hit;
-
-
-        // Debug -------------------
-        Debug.DrawRay(transform.position, rayDirection * rayLength, Color.red);
-        Debug.Log(lastHitTable == null ? "" : lastHitTable.name);
+        RaycastHit hit = new();
 
 
+        bool raycast = false;
 
 
-
-        if (Physics.Raycast(transform.position, rayDirection, out hit, rayLength, layerMask))
+        if (PlayerSingleton.playerStats.WhatWatchingTable() != null)
         {
-            Table table = hit.collider.GetComponent<Table>();
+            Vector2 mousePos = Input.mousePosition;
+            Ray ray = Camera.main.ScreenPointToRay(mousePos);
 
-            if (table != null)
+            raycast = Physics.Raycast(ray, out hit, rayLengthFood, layerMaskFood);
+
+            Debug.DrawRay(Camera.main.transform.position, ray.direction * rayLengthFood, Color.red);
+        }
+        else
+        { 
+            Vector3 rayDirection = transform.forward;
+            raycast = Physics.Raycast(transform.position, rayDirection, out hit, rayLengthTable, layerMaskTable);
+        }
+
+
+        if (raycast)
+        {
+            Outlining outliningItem = hit.collider.GetComponent<Outlining>();
+
+
+            if (outliningItem != null)
             {
-                if (lastHitTable != null && lastHitTable != table)
+                if (lastOutliningItem != null && lastOutliningItem != outliningItem)
                 {
-                    lastHitTable.SetOutlineBool(false);
+                    lastOutliningItem.SetOutlineBool(false);
                 }
 
-                table.SetOutlineBool(true);
-                lastHitTable = table;
+                outliningItem.SetOutlineBool(true);
+                lastOutliningItem = outliningItem;
             }
             else
             {
-                if (lastHitTable != null)
+                if (lastOutliningItem != null)
                 {
-                    lastHitTable.SetOutlineBool(false);
-                    lastHitTable = null;
+                    lastOutliningItem.SetOutlineBool(false);
+                    lastOutliningItem = null;
                 }
             }
         }
         else
         {
-            if (lastHitTable != null)
+            if (lastOutliningItem != null)
             {
-                lastHitTable.SetOutlineBool(false);
-                lastHitTable = null;
+                lastOutliningItem.SetOutlineBool(false);
+                lastOutliningItem = null;
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
 }

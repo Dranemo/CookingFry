@@ -28,6 +28,13 @@ public class CanvaInvItemScript : MonoBehaviour
 
     private void SetHand(int hand, Food _food)
     {
+        if(_food != null)
+        {
+            _food.SetOutlineBool(false);
+            _food.SetForceOutline(false);
+            gameObject.SetActive(false);
+        }
+
         PlayerSingleton.instance.GetComponent<Inventory>().SetHand(hand, _food);
     }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class Inventory : MonoBehaviour
 {
@@ -32,8 +33,7 @@ public class Inventory : MonoBehaviour
     {
         if(hands[hand] != null)
         {
-            hands[hand].transform.position = food.transform.position;
-            hands[hand].ResetRotation();
+            hands[hand].ResetTransform();
         }
 
 
@@ -72,13 +72,17 @@ public class Inventory : MonoBehaviour
     }
 */
 
-
+    public bool IsHandEmpty(int hand)
+    {
+        return hands[hand] == null;
+    }
 
     public void SetHand(int hand, Food food)
     {
-        if(hands[hand] != null)
+        if(hands[hand] != null && food != null)
         {
-            Destroy(hands[hand].gameObject);
+            Debug.Log("Bubup non");
+            return;
         }
 
 
@@ -104,5 +108,11 @@ public class Inventory : MonoBehaviour
         { 
             hands[hand] = null;
         }
+    }
+
+    public void ThrashItem(int hand, Thrash thrash)
+    {
+        GameObject.Destroy(hands[hand]);
+        hands[hand] = null;
     }
 }

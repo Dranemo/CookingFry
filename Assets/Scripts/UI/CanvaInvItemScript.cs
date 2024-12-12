@@ -8,41 +8,78 @@ public class CanvaInvItemScript : MonoBehaviour
     [SerializeField] Button rightHandButton;
     [SerializeField] Button leftHandButton;
 
-    Food food = null;
+    ItemShowingInvMenuInWorld item = null;
 
     private void Awake()
     {
-        rightHandButton.onClick.AddListener(() => SetHand(1, food));
-        leftHandButton.onClick.AddListener(() => SetHand(0, food));
+        rightHandButton.onClick.AddListener(() => InteractButton(1));
+        leftHandButton.onClick.AddListener(() => InteractButton(0));
     }
 
-    public void SetFood(Food _food)
+    public void SetItem(ItemShowingInvMenuInWorld _item)
     {
-        food = _food;
+        item = _item;
 
-        if(food != null)
+        if(item != null)
         {
             SetPosition();
+
+
+
+            Thrash thrash = item.GetComponent<Thrash>();
+            if (thrash != null)
+            {
+                if (PlayerSingleton.instance.GetComponent<Inventory>().IsHandEmpty(0))
+                {
+                    leftHandButton.gameObject.SetActive(false);
+                }
+                if (PlayerSingleton.instance.GetComponent<Inventory>().IsHandEmpty(1))
+                {
+                    rightHandButton.gameObject.SetActive(false);
+                }
+                return;
+            }
         }
+
+
+
+        
     }
 
-    private void SetHand(int hand, Food _food)
+    private void InteractButton(int hand)
     {
-        if(_food != null)
+
+        if(item != null)
         {
-            _food.SetOutlineBool(false);
-            _food.SetForceOutline(false);
+            item.SetOutlineBool(false);
+            item.SetForceOutline(false);
             gameObject.SetActive(false);
         }
 
-        PlayerSingleton.instance.GetComponent<Inventory>().SetHand(hand, _food);
+
+
+        Food food = item.GetComponent<Food>();
+
+        if(food != null)
+        {
+            PlayerSingleton.instance.GetComponent<Inventory>().SetHand(hand, food);
+            return;
+        }
+
+        Thrash thrash = item.GetComponent<Thrash>();
+        if (thrash != null)
+        {
+            PlayerSingleton.instance.GetComponent<Inventory>().ThrashItem(hand, thrash);
+            return;
+        }
+
     }
 
 
     private void SetPosition()
     {
         Vector3 offset = new Vector3(1.5f, 0, 0); 
-        transform.position = food.transform.position + offset;
+        transform.position = item.transform.position + offset;
 
         transform.LookAt(Camera.main.transform);
     }

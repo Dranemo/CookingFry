@@ -41,6 +41,7 @@ public class PlayerSeeTable : MonoBehaviour
         { 
             Vector3 rayDirection = transform.forward;
             raycast = Physics.Raycast(transform.position, rayDirection, out hit, rayLengthTable, layerMaskTable);
+            Debug.DrawRay(Camera.main.transform.position, rayDirection * rayLengthFood, Color.red);
         }
 
 
@@ -56,6 +57,13 @@ public class PlayerSeeTable : MonoBehaviour
                     lastOutliningItem.SetOutlineBool(false);
                 }
 
+                Debug.Log("hit: " + hit.collider.name);
+
+                Thrash thrash = hit.collider.GetComponent<Thrash>();
+                if (thrash != null)
+                {
+                    Debug.Log("thrash");
+                }
                 outliningItem.SetOutlineBool(true);
                 lastOutliningItem = outliningItem;
             }

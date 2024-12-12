@@ -43,14 +43,17 @@ public class Table : Outlining
 
     IEnumerator WatchingTable(bool _bool)
     {
+        foreach (GameObject item in itemToDisable)
+            item.SetActive(_bool);
+
+
         virtualCamera.SetActive(_bool);
         if (!_bool)
         {
             yield return new WaitForSeconds(0.5f);
         }
 
-        foreach (GameObject item in itemToDisable)
-            item.SetActive(_bool);
+        
         PlayerSingleton.playerStats.SetWatchingTable(_bool, this);
 
         PlayerSingleton.instance.GetComponent<PlayerMovements>().enabled = !_bool;

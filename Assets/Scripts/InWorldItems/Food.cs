@@ -4,19 +4,20 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class Food : Outlining
+public class Food : ItemShowingInvMenuInWorld
 {
-    [SerializeField] private GameObject canvaInvItem;
-    bool forceOutline = false;
-
     [SerializeField] float inHandOffset = 1.5f;
 
 
-    Vector3 defaultRotation;
+    Vector3 defaultTransformPos;
+    Quaternion defaultTransformRot;
+    Vector3 defaultTransformScale;
 
     private void Start()
     {
-        defaultRotation = transform.rotation.eulerAngles;
+        defaultTransformPos = transform.position;
+        defaultTransformRot = transform.rotation;
+        defaultTransformScale = transform.localScale;
     }
 
 
@@ -31,7 +32,7 @@ public class Food : Outlining
 
         if (forceOutline && !isOutlined)
         {
-            canvaInvItem.GetComponent<CanvaInvItemScript>().SetFood(null);
+            canvaInvItem.GetComponent<CanvaInvItemScript>().SetItem(null);
             canvaInvItem.SetActive(false);
 
             forceOutline = false;
@@ -47,50 +48,18 @@ public class Food : Outlining
         }
     }
 
-    private void Update()
+
+
+
+
+
+
+    
+    public void ResetTransform()
     {
-        if(forceOutline && !outline.enabled)
-        {
-            outline.enabled = true;
-            if(canvaInvItem.activeSelf == false)
-            {
-                canvaInvItem.SetActive(true);
-                canvaInvItem.GetComponent<CanvaInvItemScript>().SetFood(this);
-            }
-        }
-
-        if(!forceOutline && outline.enabled)
-            outline.enabled = false;
-    }
-
-
-
-
-
-
-    private bool IsPointerOverUIElement()
-    {
-        PointerEventData eventData = new PointerEventData(EventSystem.current);
-        eventData.position = Input.mousePosition;
-
-        List<RaycastResult> results = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(eventData, results);
-
-        return results.Count > 0;
-    }
-
-
-
-
-
-
-    public void SetForceOutline(bool value)
-    {
-        forceOutline = value;
-    }
-    public void ResetRotation()
-    {
-        transform.rotation = Quaternion.Euler(defaultRotation);
+        transform.position = defaultTransformPos;
+        transform.rotation = defaultTransformRot;
+        transform.localScale = defaultTransformScale;
     }
     public void SetInHandOffset(Vector3 forward)
     {

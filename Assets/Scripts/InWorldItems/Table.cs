@@ -8,7 +8,7 @@ public class Table : Outlining
 {
 
     [SerializeField] GameObject virtualCamera;
-    protected List<GameObject> itemToDisable = new List<GameObject>();
+    [SerializeField] protected List<GameObject> itemToDisable = new List<GameObject>();
 
     Coroutine coroutineRunning = null;
 

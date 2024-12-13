@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -31,16 +32,28 @@ public class ItemShowingInvMenuInWorld : Outlining
 
     protected void Update()
     {
-        if (forceOutline && outline.enabled)
+        if (isOutlined || forceOutline)
         {
-            if (canvaInvItem.activeSelf == false)
+            if (outline.enabled == false)
             {
-                canvaInvItem.SetActive(true);
-                canvaInvItem.GetComponent<CanvaInvItemScript>().SetItem(this);
+                outline.enabled = true;
             }
+
+            if (forceOutline && outline.enabled)
+            {
+                if (canvaInvItem.activeSelf == false)
+                {
+                    canvaInvItem.SetActive(true);
+                    canvaInvItem.GetComponent<CanvaInvItemScript>().SetItem(this);
+                }
+            }
+            return;
         }
 
-        if(!forceOutline && !isOutlined && outline.enabled)
+
+        
+
+        if(!forceOutline && outline.enabled)
             outline.enabled = false;
     }
 

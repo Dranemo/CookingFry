@@ -7,6 +7,8 @@ public class PlayerSingleton : MonoBehaviour
     public static PlayerSingleton instance;
     public static PlayerStats playerStats;
 
+    [SerializeField] GameObject canvasPlayer;
+
     private void Awake()
     {
         if (instance == null)
@@ -18,5 +20,14 @@ public class PlayerSingleton : MonoBehaviour
         {
             Destroy(this);
         }
+    }
+
+
+
+
+
+    void SetActiveCanvasPlayer(bool value)
+    {
+        canvasPlayer.SetActive(value);
     }
 }

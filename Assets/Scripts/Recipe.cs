@@ -7,9 +7,9 @@ using UnityEngine;
 public class Recipe : ScriptableObject
 {
     [SerializeField] string recipeName;
-    [SerializeField] List<string> ingredients;
+    [SerializeField] List<KitchenElement> ingredients;
     [SerializeField] string instructions;
-    [SerializeField] Vector3 itemInWorld;
+    [SerializeField] Sprite sprite;
 
 
 
@@ -20,9 +20,9 @@ public class Recipe : ScriptableObject
         stringRecipe = $"<b><u>{recipeName}<u></b";
 
         stringRecipe += $"<b>Ingredients:</b>\n";
-        foreach (var ingredient in ingredients)
+        foreach (KitchenElement ingredient in ingredients)
         {
-            stringRecipe += $"{ingredient}\n";
+            stringRecipe += $"{ingredient.GetName()}\n";
         }
         stringRecipe += "\n";
 
@@ -42,9 +42,9 @@ public class Recipe : ScriptableObject
         string stringRecipe = "";
 
         stringRecipe += $"<b>Ingredients:</b>\n";
-        foreach (var ingredient in ingredients)
+        foreach (KitchenElement ingredient in ingredients)
         {
-            stringRecipe += $"- {ingredient}\n";
+            stringRecipe += $"- {ingredient.GetName()}\n";
         }
 
         return stringRecipe;
@@ -63,9 +63,9 @@ public class Recipe : ScriptableObject
 
 
 
-    public Vector3 GetItemInWorld()
+    public Sprite GetSprite()
     {
-        return itemInWorld;
+        return sprite;
     }
 
 

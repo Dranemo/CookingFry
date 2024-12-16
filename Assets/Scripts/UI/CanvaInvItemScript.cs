@@ -23,22 +23,6 @@ public class CanvaInvItemScript : MonoBehaviour
         if(item != null)
         {
             SetPosition();
-
-
-
-            Thrash thrash = item.GetComponent<Thrash>();
-            if (thrash != null)
-            {
-                if (PlayerSingleton.instance.GetComponent<Inventory>().IsHandEmpty(0))
-                {
-                    leftHandButton.gameObject.SetActive(false);
-                }
-                if (PlayerSingleton.instance.GetComponent<Inventory>().IsHandEmpty(1))
-                {
-                    rightHandButton.gameObject.SetActive(false);
-                }
-                return;
-            }
         }
 
 
@@ -63,13 +47,6 @@ public class CanvaInvItemScript : MonoBehaviour
         if(food != null)
         {
             PlayerSingleton.instance.GetComponent<Inventory>().SetHand(hand, food);
-            return;
-        }
-
-        Thrash thrash = item.GetComponent<Thrash>();
-        if (thrash != null)
-        {
-            PlayerSingleton.instance.GetComponent<Inventory>().ThrashItem(hand, thrash);
             return;
         }
 

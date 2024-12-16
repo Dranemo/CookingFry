@@ -108,12 +108,4 @@ public class Inventory : MonoBehaviour
             hands[hand] = null;
         }
     }
-
-    public void ThrashItem(int hand, Thrash thrash)
-    {
-        GameObject.Destroy(hands[hand]);
-        hands[hand] = null;
-
-        rtManager.CaptureRenderTexture(handTextures[hand], camPos, rotationTexture[hand], layerMask);
-    }
 }

@@ -57,13 +57,6 @@ public class PlayerSeeTable : MonoBehaviour
                     lastOutliningItem.SetOutlineBool(false);
                 }
 
-                Debug.Log("hit: " + hit.collider.name);
-
-                Thrash thrash = hit.collider.GetComponent<Thrash>();
-                if (thrash != null)
-                {
-                    Debug.Log("thrash");
-                }
                 outliningItem.SetOutlineBool(true);
                 lastOutliningItem = outliningItem;
             }

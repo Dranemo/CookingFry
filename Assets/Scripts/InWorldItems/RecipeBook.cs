@@ -6,11 +6,18 @@ using UnityEngine.UI;
 
 public class RecipeBook : MonoBehaviour
 {
+    [SerializeField] LayerMask layerMask;
     [SerializeField] List<Recipe> recipes;
 
-    [Header("Title, ingredients, instructions")]
-    [SerializeField] List<TextMeshProUGUI> recipePage1;
-    [SerializeField] List<TextMeshProUGUI> recipePage2;
+
+    [SerializeField] TextMeshProUGUI recipePage1Title;
+    [SerializeField] Image recipePage1Image;
+
+    [SerializeField] TextMeshProUGUI recipePage2Title;
+    [SerializeField] Image recipePage2Image;
+
+
+
 
     [SerializeField] Button previousButton;
     [SerializeField] Button nextButton;
@@ -28,15 +35,15 @@ public class RecipeBook : MonoBehaviour
         previousButton.onClick.AddListener(PreviousPage);
         nextButton.onClick.AddListener(NextPage);
 
-        recipePage1[0].transform.GetComponentInParent<Button>().onClick.AddListener(() => ShowRecipe(currentPage));
-        recipePage2[0].transform.GetComponentInParent<Button>().onClick.AddListener(() => ShowRecipe(currentPage + 1));
+        recipePage1Title.transform.GetComponentInParent<Button>().onClick.AddListener(() => ShowRecipe(currentPage));
+        recipePage2Title.transform.GetComponentInParent<Button>().onClick.AddListener(() => ShowRecipe(currentPage + 1));
 
         previousButton.gameObject.SetActive(false);
 
         if (recipes.Count > 0)
         {
-            SetRecipe(recipePage1, 0);
-            SetRecipe(recipePage2, 1);
+            SetRecipe(recipePage1Title, recipePage1Image, 0);
+            SetRecipe(recipePage2Title, recipePage2Image, 1);
         }
     }
 
@@ -63,8 +70,8 @@ public class RecipeBook : MonoBehaviour
 
         if (currentPage < recipes.Count)
         {
-            SetRecipe(recipePage1, currentPage);
-            SetRecipe(recipePage2, currentPage + 1);
+            SetRecipe(recipePage1Title, recipePage1Image, currentPage);
+            SetRecipe(recipePage2Title, recipePage2Image, currentPage + 1);
         }
     }
 
@@ -74,8 +81,8 @@ public class RecipeBook : MonoBehaviour
 
         if (currentPage >= 0)
         {
-            SetRecipe(recipePage1, currentPage);
-            SetRecipe(recipePage2, currentPage + 1);
+            SetRecipe(recipePage1Title, recipePage1Image, currentPage);
+            SetRecipe(recipePage2Title, recipePage2Image, currentPage + 1);
         }
     }
 
@@ -92,19 +99,20 @@ public class RecipeBook : MonoBehaviour
 
 
 
-    void SetRecipe(List<TextMeshProUGUI> recipePage, int page)
+    void SetRecipe(TextMeshProUGUI recipePageTitle, Image sprite, int page)
     {
 
         if(page < 0 || page >= recipes.Count)
         {
-            recipePage[0].text = "";
-            recipePage[1].text = "";
-            recipePage[2].text = "";
+            recipePageTitle.text = "";
+            sprite.enabled = false;
             return;
         }
 
-        recipePage[0].text = recipes[page].GetRecipeTitle();
-        recipePage[1].text = recipes[page].GetRecipeIngredients();
-        recipePage[2].text = recipes[page].GetRecipeInstructions();
+        recipePageTitle.text = recipes[page].GetRecipeTitle();
+
+        if(!sprite.enabled)
+            sprite.enabled = true;
+        sprite.sprite = recipes[page].GetSprite();
     }
 }

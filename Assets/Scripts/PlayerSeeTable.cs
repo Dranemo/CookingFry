@@ -15,6 +15,9 @@ public class PlayerSeeTable : MonoBehaviour
     [SerializeField] LayerMask layerMaskFood; // Masque de collision
 
 
+    [SerializeField] bool canDropItems = false;
+
+
 
 
     private Outlining lastOutliningItem;
@@ -23,9 +26,11 @@ public class PlayerSeeTable : MonoBehaviour
     {
 
         RaycastHit hit = new();
+        RaycastHit hitDrop = new(); // Drop
 
 
         bool raycast = false;
+        bool raycastDrop = false; // Drop
 
 
         if (PlayerSingleton.playerStats.WhatWatchingTable() != null)
@@ -42,6 +47,17 @@ public class PlayerSeeTable : MonoBehaviour
             Vector3 rayDirection = transform.forward;
             raycast = Physics.Raycast(transform.position, rayDirection, out hit, rayLengthTable, layerMaskTable);
             Debug.DrawRay(Camera.main.transform.position, rayDirection * rayLengthFood, Color.red);
+        }
+
+        if (canDropItems)                                                                                                                       // Drop
+        {
+
+            Vector2 mousePos = Input.mousePosition;
+            Ray ray = Camera.main.ScreenPointToRay(mousePos);
+
+            raycastDrop = Physics.Raycast(ray, out hitDrop, rayLengthFood, layerMaskTable);
+
+            Debug.DrawRay(Camera.main.transform.position, ray.direction * rayLengthFood, Color.red);                                         // Drop
         }
 
 
@@ -75,6 +91,21 @@ public class PlayerSeeTable : MonoBehaviour
             {
                 lastOutliningItem.SetOutlineBool(false);
                 lastOutliningItem = null;
+            }
+
+            if (PlayerSingleton.playerStats.WhatWatchingTable() != null && canDropItems)
+            {
+                if (raycastDrop) // Vérification si le raycast de drop a touché quelque chose
+                {
+                    Vector3 hitPos = hitDrop.point;
+                    Debug.Log("Position d'impact du drop: " + hitPos);
+
+                    DropItem.instance.SetHit(raycastDrop, hitPos);
+                }
+                else
+                {
+                    Debug.Log("Le raycast de drop n'a touché aucun objet.");
+                }
             }
         }
     }

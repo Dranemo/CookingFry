@@ -40,35 +40,6 @@ public class Inventory : MonoBehaviour
         rtManager.CaptureRenderTexture(handTextures[1], camPos, leftCamRot, layerMask);
     }
 
-
-
-
-
-
-/*    public void SetHand(int hand, Food food)
-    {
-        if(hands[hand] != null)
-        {
-            hands[hand].ResetTransform();
-        }
-
-
-
-        hands[hand] = food;
-        if (food != null)
-        {
-            food.transform.position = handTextures[hand].transform.position;
-            food.SetInHandOffset(handTextures[hand].transform.forward);
-
-            food.transform.rotation = handTextures[hand].transform.rotation;
-            food.transform.rotation *= Quaternion.Euler(-30, hand == 1 ? -20 : 20, -90);
-
-            food.transform.localScale = new Vector3(1, hand == 1 ? -1 : 1, 1);
-        }
-        Debug.Log("SetHand: " + hand + " " + food);
-    }
-*/
-
     public bool IsHandEmpty(int hand)
     {
         return hands[hand] == null;
@@ -76,11 +47,11 @@ public class Inventory : MonoBehaviour
 
     public void SetHand(int hand, Food food)
     {
-        /*if(hands[hand] != null && food != null)
+        if(hands[hand] != null && food != null)
         {
             Debug.Log("Bubup non");
             return;
-        }*/
+        }
 
         if (food != null)
         {
@@ -91,21 +62,59 @@ public class Inventory : MonoBehaviour
             hands[hand] = duplicateFoodFood;
 
 
-            duplicateFoodFood.transform.position = camPos;
-            duplicateFoodFood.SetInHandOffset(rotationTexture[hand] * Vector3.forward);
-
-            duplicateFoodFood.transform.rotation = rotationTexture[hand];
-            duplicateFoodFood.transform.rotation *= Quaternion.Euler(-30, hand == 1 ? -20 : 20, -90);
-
-            duplicateFoodFood.transform.localScale = new Vector3(1, hand == 1 ? -1 : 1, 1);
-
-
-            rtManager.CaptureRenderTexture(handTextures[hand], camPos, rotationTexture[hand], layerMask);
+            PositionFood(duplicateFoodFood, hand);
 
         }
         else
         { 
             hands[hand] = null;
         }
+    }
+    public void SetHandPrefab(int hand, GameObject foodPrefab)
+    {
+        if(hands[hand] != null && foodPrefab != null)
+        {
+            Debug.Log("Bubup non");
+            return;
+        }
+
+        if (foodPrefab != null)
+        {
+            GameObject duplicateFood = Instantiate(foodPrefab);
+            Food duplicateFoodFood = duplicateFood.GetComponent<Food>();
+            hands[hand] = duplicateFoodFood;
+
+
+            PositionFood(duplicateFoodFood, hand);
+
+        }
+        else
+        { 
+            hands[hand] = null;
+        }
+    }
+
+
+
+
+
+    void PositionFood(Food food, int hand)
+    {
+        food.transform.position = camPos;
+        food.SetInHandOffset(rotationTexture[hand] * Vector3.forward);
+
+        food.transform.rotation = rotationTexture[hand];
+        food.transform.rotation *= Quaternion.Euler(-30, hand == 1 ? -20 : 20, -90);
+
+        food.transform.localScale = new Vector3(1, hand == 1 ? -1 : 1, 1);
+
+
+        rtManager.CaptureRenderTexture(handTextures[hand], camPos, rotationTexture[hand], layerMask);
+    }
+
+
+    public Food GetHand(int hand)
+    {
+        return hands[hand];
     }
 }

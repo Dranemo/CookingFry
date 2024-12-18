@@ -12,6 +12,8 @@ public class RecipeCanvas : MonoBehaviour
     [SerializeField] Button quitButton;
     [SerializeField] GameObject bookCanvas;
 
+    Outlining support;
+
 
     private void OnEnable()
     {
@@ -24,8 +26,10 @@ public class RecipeCanvas : MonoBehaviour
 
 
 
-    public void PrintOnPage(Recipe recipe)
+    public void PrintOnPage(Recipe recipe, Outlining _support)
     {
+        support = _support;
+
         texts[0].text = recipe.GetRecipeTitle();
         texts[1].text = recipe.GetRecipeIngredients();
         texts[2].text = recipe.GetRecipeInstructions();
@@ -34,6 +38,7 @@ public class RecipeCanvas : MonoBehaviour
     void CloseRecipe()
     {
         bookCanvas.GetComponent<GraphicRaycaster>().enabled = true;
+        support.IsInteractButtonEnabled(true);
         gameObject.SetActive(false);
     }
 }

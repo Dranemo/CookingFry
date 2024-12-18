@@ -7,6 +7,7 @@ using UnityEngine;
 public class KitchenElement : ScriptableObject
 {
     [SerializeField] string name;
+    [SerializeField] string description;
     [SerializeField] GameObject prefab;
     [SerializeField] Sprite sprite;
 
@@ -14,5 +15,19 @@ public class KitchenElement : ScriptableObject
     public string GetName()
     {
         return name;
-    }   
+    }
+
+    public string GetDescription()
+    {
+        return description;
+    }
+
+    public Sprite GetSprite()
+    {
+        return sprite;
+    }
+
+    public GameObject GetPrefab() {
+        return prefab;
+    }
 }

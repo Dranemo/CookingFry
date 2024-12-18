@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class RecipeBook : MonoBehaviour
 {
-    [SerializeField] LayerMask layerMask;
     [SerializeField] List<Recipe> recipes;
 
 
@@ -24,6 +23,8 @@ public class RecipeBook : MonoBehaviour
 
     [SerializeField] GameObject recipeCanvas;
     [SerializeField] GameObject bookCanvas;
+
+    [SerializeField] Outlining Support;
 
     private int currentPage = 0;
 
@@ -92,8 +93,10 @@ public class RecipeBook : MonoBehaviour
         if (page < recipes.Count)
         {
             bookCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+            Support.IsInteractButtonEnabled(false);
+
             recipeCanvas.SetActive(true);   
-            recipeCanvas.GetComponent<RecipeCanvas>().PrintOnPage(recipes[page]);
+            recipeCanvas.GetComponent<RecipeCanvas>().PrintOnPage(recipes[page], Support);
         }
     }
 

@@ -12,15 +12,15 @@ public class Outlining : MonoBehaviour
 
     protected bool isOutlined = false;
 
-    private void OnEnable()
+    private void Awake()
     {
         interact.action.performed += Interact;
         interact.action.Enable();
     }
     private void OnDisable()
     {
-        interact.action.performed -= Interact;
-        interact.action.Disable();
+        //interact.action.performed -= Interact;
+        //interact.action.Disable();
     }
 
 
@@ -28,7 +28,7 @@ public class Outlining : MonoBehaviour
 
     public virtual void SetOutlineBool(bool value)
     {
-        if (value == isOutlined)
+        if (value == isOutlined || outline == null)
         {
             return;
         }
@@ -45,5 +45,15 @@ public class Outlining : MonoBehaviour
     {
 
     }
-    
+
+
+
+    public void IsInteractButtonEnabled(bool _bool)
+    {
+        if(_bool)
+            interact.action.Enable();
+        else
+            interact.action.Disable();
+    }
+
 }

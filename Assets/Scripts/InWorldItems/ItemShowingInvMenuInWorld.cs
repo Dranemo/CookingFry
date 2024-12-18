@@ -9,10 +9,13 @@ public class ItemShowingInvMenuInWorld : Outlining
 {
 
     protected bool forceOutline = false;
-    [SerializeField] protected GameObject canvaInvItem;
+    protected GameObject canvaInvItem;
 
 
-
+    protected void Start()
+    {
+        canvaInvItem = CanvaInvItemScript.instance.gameObject;
+    }
 
 
 
@@ -32,6 +35,10 @@ public class ItemShowingInvMenuInWorld : Outlining
 
     protected void Update()
     {
+        if (outline == null)
+            return;
+
+
         if (isOutlined || forceOutline)
         {
             if (outline.enabled == false)

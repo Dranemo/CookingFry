@@ -9,14 +9,31 @@ public class CanvaInvItemScript : MonoBehaviour
     [SerializeField] Button leftHandButton;
 
     ItemShowingInvMenuInWorld item = null;
+    bool showBothButton = true;
+
+    public static CanvaInvItemScript instance;
+
+
+
+
+
 
     private void Awake()
     {
+        if(instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         rightHandButton.onClick.AddListener(() => InteractButton(1));
         leftHandButton.onClick.AddListener(() => InteractButton(0));
+
+        instance = this;
+        gameObject.SetActive(false);
     }
 
-    public void SetItem(ItemShowingInvMenuInWorld _item)
+    public void SetItem(ItemShowingInvMenuInWorld _item, bool _showBothButton = true)
     {
         item = _item;
 
@@ -28,6 +45,28 @@ public class CanvaInvItemScript : MonoBehaviour
 
 
         
+    }
+
+
+    private void OnEnable()
+    {
+        if (!showBothButton)
+        {
+            Inventory inv = PlayerSingleton.instance.GetComponent<Inventory>();
+            if (inv.GetHand(0) != null)
+            {
+                leftHandButton.gameObject.SetActive(false);
+            }
+            if (inv.GetHand(1) != null)
+            {
+                rightHandButton.gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            leftHandButton.gameObject.SetActive(true);
+            rightHandButton.gameObject.SetActive(true);
+        }
     }
 
     private void InteractButton(int hand)
@@ -43,11 +82,20 @@ public class CanvaInvItemScript : MonoBehaviour
 
 
         Food food = item.GetComponent<Food>();
-
         if(food != null)
         {
             PlayerSingleton.instance.GetComponent<Inventory>().SetHand(hand, food);
             return;
+        }
+
+        else
+        {
+            Inventory inv = PlayerSingleton.instance.GetComponent<Inventory>();
+            Food handItem = inv.GetHand(hand);
+
+            inv.SetHand(hand, null);
+
+            handItem.SetPosItemDrop(item.transform.position);
         }
 
     }

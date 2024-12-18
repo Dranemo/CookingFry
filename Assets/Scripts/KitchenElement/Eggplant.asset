@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Eggplant
   m_EditorClassIdentifier: 
   name: Eggplant
-  prefab: {fileID: 0}
+  description: pas bon
+  prefab: {fileID: 9194346180115086376, guid: be2ec47895191d242ac108728a3107fa, type: 3}
   sprite: {fileID: 21300000, guid: 76c5a1f473e1cd64abd2bc691a8c9bed, type: 3}

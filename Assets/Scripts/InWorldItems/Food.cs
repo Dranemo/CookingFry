@@ -7,14 +7,19 @@ using UnityEngine.InputSystem;
 public class Food : ItemShowingInvMenuInWorld
 {
     [SerializeField] float inHandOffset = 1.5f;
+    [SerializeField] float upOffset = 0.5f;
+
+    [SerializeField] KitchenElement kitchenElement;
 
 
     Vector3 defaultTransformPos;
     Quaternion defaultTransformRot;
     Vector3 defaultTransformScale;
 
-    private void Start()
+    new private void Start()
     {
+        base.Start();
+
         defaultTransformPos = transform.position;
         defaultTransformRot = transform.rotation;
         defaultTransformScale = transform.localScale;
@@ -64,5 +69,14 @@ public class Food : ItemShowingInvMenuInWorld
     public void SetInHandOffset(Vector3 forward)
     {
         transform.position += forward * inHandOffset;
+    }
+    public void SetPosItemDrop(Vector3 pos)
+    {
+        transform.position = pos + Vector3.up * upOffset;
+    }
+
+    public KitchenElement GetKitchenElement()
+    {
+        return kitchenElement;
     }
 }

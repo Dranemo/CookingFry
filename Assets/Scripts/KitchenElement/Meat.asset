@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Meat
   m_EditorClassIdentifier: 
   name: Meat
-  prefab: {fileID: 0}
+  description: de la viand
+  prefab: {fileID: 5052485813198806196, guid: f9a971d8c66b2a346a658c40d5b2b3dd, type: 3}
   sprite: {fileID: 21300000, guid: a335ab1976f86d743937768bcbdfdda2, type: 3}

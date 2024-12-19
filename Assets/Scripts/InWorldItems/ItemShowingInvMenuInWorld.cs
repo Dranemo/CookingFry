@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class ItemShowingInvMenuInWorld : Outlining
 {
@@ -15,9 +16,26 @@ public class ItemShowingInvMenuInWorld : Outlining
     protected GameObject canvaInvItem;
 
 
+
+    [SerializeField] private InputActionReference tableInput;
+
+
+
     protected void Start()
     {
         canvaInvItem = CanvaInvItemScript.instance.gameObject;
+
+    }
+
+    new protected void Awake()
+    {
+        base.Awake();
+
+
+        tableInput.action.performed += CloseEverything;
+
+        return;
+
     }
 
 
@@ -44,12 +62,12 @@ public class ItemShowingInvMenuInWorld : Outlining
         {
             if (outline.enabled == false)
             {
-                outline.enabled = true;
+                    outline.enabled = true;
             }
 
             if (forceOutline && outline.enabled)
             {
-                if (canvaInvItem.activeSelf == false)
+                if (canvaInvItem.activeSelf == false && PlayerSingleton.playerStats.WhatWatchingTable() != null)
                 {
 
 
@@ -70,5 +88,17 @@ public class ItemShowingInvMenuInWorld : Outlining
     public void SetForceOutline(bool value)
     {
         forceOutline = value;
+    }
+
+
+
+    void CloseEverything(InputAction.CallbackContext context)
+    {
+            canvaInvItem.GetComponent<CanvaInvItemScript>().SetItem(null);
+            canvaInvItem.SetActive(false);
+
+            forceOutline = false;
+            SetOutlineBool(false);
+            return;
     }
 }

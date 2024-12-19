@@ -43,6 +43,8 @@ public class Table : Outlining
 
     IEnumerator WatchingTable(bool _bool)
     {
+
+
         foreach (GameObject item in itemToDisable)
             item.SetActive(_bool);
 
@@ -66,6 +68,7 @@ public class Table : Outlining
             yield return new WaitForSeconds(0.5f);
         }
 
+        CanvaInvItemScript.instance.gameObject.SetActive(false);
         coroutineRunning = null;
     }
 }

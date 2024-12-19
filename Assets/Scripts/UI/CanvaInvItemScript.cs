@@ -114,6 +114,17 @@ public class CanvaInvItemScript : MonoBehaviour
             return;
         }
 
+        Thrash thrash = item.GetComponent<Thrash>();
+        if (thrash != null)
+        {
+            Inventory inv = PlayerSingleton.instance.GetComponent<Inventory>();
+            Food handItem = inv.GetHand(hand);
+
+
+            inv.SetHand(hand, null);
+            Destroy(handItem.gameObject);
+        }
+
 
         else
         {
@@ -130,7 +141,7 @@ public class CanvaInvItemScript : MonoBehaviour
 
     private void SetPosition()
     {
-        Vector3 offset = new Vector3(1.5f, 0, 0); 
+        Vector3 offset = new Vector3(1.5f, 1f, 0); 
         transform.position = item.transform.position + offset;
 
         transform.LookAt(Camera.main.transform);

@@ -63,12 +63,13 @@ public class PlayerSeeTable : MonoBehaviour
 
         if (raycast)
         {
-            DropItem.instance.SetHit(raycastDrop, Vector3.zero);
+            DropItem.instance.SetHit(false, Vector3.zero);
             Outlining outliningItem = hit.collider.GetComponent<Outlining>();
 
 
             if (outliningItem != null)
             {
+                Debug.Log("Le raycast a touché un objet: " + outliningItem.name);
                 if (lastOutliningItem != null && lastOutliningItem != outliningItem)
                 {
                     lastOutliningItem.SetOutlineBool(false);
@@ -88,7 +89,7 @@ public class PlayerSeeTable : MonoBehaviour
         }
         else
         {
-            Debug.Log("Le raycast n'a touché aucun objet.");
+            //Debug.Log("Le raycast n'a touché aucun objet.");
 
 
             if (lastOutliningItem != null)
@@ -109,7 +110,7 @@ public class PlayerSeeTable : MonoBehaviour
                 else
                 {
                     DropItem.instance.SetHit(raycastDrop, Vector3.zero);
-                    Debug.Log("Le raycast de drop n'a touché aucun objet.");
+                    //Debug.Log("Le raycast de drop n'a touché aucun objet.");
                 }
             }
         }

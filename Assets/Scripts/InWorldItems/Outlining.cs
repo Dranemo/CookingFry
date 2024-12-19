@@ -21,7 +21,7 @@ public class Outlining : MonoBehaviour
     {
         //interact.action.performed -= Interact;
         //interact.action.Disable();
-    }
+    }   
 
 
 

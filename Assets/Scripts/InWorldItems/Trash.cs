@@ -3,23 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class DropItem : ItemShowingInvMenuInWorld
+public class Thrash : ItemShowingInvMenuInWorld
 {
-    static public DropItem instance;
-    Vector3 pos;
-
-    new protected void Awake()
+    private void Awake()
     {
-        instance = this;
+        base.Awake();
+
         showEveryHandOption = false;
         addItem = false;
-
-        base.Awake();
     }
-
-
-
-
 
 
 
@@ -29,36 +21,27 @@ public class DropItem : ItemShowingInvMenuInWorld
         {
             return;
         }
+
+
+
         if (forceOutline && !isOutlined)
         {
             canvaInvItem.GetComponent<CanvaInvItemScript>().SetItem(null);
             canvaInvItem.SetActive(false);
 
             forceOutline = false;
-            SetHit(false, Vector3.zero);
+            SetOutlineBool(false);
             return;
         }
 
 
         if (isOutlined)
         {
-            SetPos();
+
             forceOutline = true;
         }
     }
 
 
-    public void SetHit(bool _hit, Vector3 _pos)
-    {
-        SetOutlineBool(_hit);
-        pos = _pos;
-    }
 
-
-    void SetPos()
-    {
-        transform.position = pos + Vector3.up * 0.3f;
-
-        canvaInvItem.GetComponent<CanvaInvItemScript>().SetItem(this, showEveryHandOption, addItem);
-    }
 }

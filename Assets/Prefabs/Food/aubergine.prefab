@@ -112,7 +112,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9194346180115086376}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -185,9 +185,30 @@ MonoBehaviour:
   interact: {fileID: 4201714466767477506, guid: 419e0181af2f01d4d87072a168d4aee6,
     type: 3}
   outline: {fileID: 2664996822129157346}
-  canvaInvItem: {fileID: 0}
+  tableInput: {fileID: 6382508308991903045, guid: 419e0181af2f01d4d87072a168d4aee6,
+    type: 3}
   inHandOffset: 1.5
+  upOffset: 0.5
   kitchenElement: {fileID: 11400000, guid: 642b8f9659dff5049a10f5290abcb5bc, type: 2}
+  meshFilter: {fileID: 0}
+  meshCollider: {fileID: 0}
+  canBeCooked: 0
+  isCooked: 0
+  cookingTime: 100
+  cookedMaterial: {fileID: 0}
+  cookedKitchenElement: {fileID: 0}
+  canBeBurned: 0
+  isBurned: 0
+  burningTime: 150
+  burnedMaterial: {fileID: 0}
+  fireParticles: {fileID: 0}
+  burnedKitchenElement: {fileID: 0}
+  canBeCutted: 0
+  cuttedFood: {fileID: 0}
+  defaultTransformRot: {x: 0, y: 0, z: 0, w: 0}
+  defaultTransformScale: {x: 1, y: 1, z: 1}
+  alreadyCloned: 0
+  container: {fileID: 0}
 --- !u!114 &2664996822129157346
 MonoBehaviour:
   m_ObjectHideFlags: 0

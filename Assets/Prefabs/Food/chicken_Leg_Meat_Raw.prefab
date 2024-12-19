@@ -186,6 +186,8 @@ MonoBehaviour:
   interact: {fileID: 4201714466767477506, guid: 419e0181af2f01d4d87072a168d4aee6,
     type: 3}
   outline: {fileID: 5581736418499462483}
+  tableInput: {fileID: 6382508308991903045, guid: 419e0181af2f01d4d87072a168d4aee6,
+    type: 3}
   inHandOffset: 1.5
   upOffset: 0.5
   kitchenElement: {fileID: 11400000, guid: 026a4e187ad12364a881d4b736c4dceb, type: 2}

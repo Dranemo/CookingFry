@@ -203,17 +203,17 @@ PrefabInstance:
     - target: {fileID: 3667361826476818639, guid: d7e5bc90912b3fc4ea2cca57811e59f0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.3352451
+      value: 8.454044
       objectReference: {fileID: 0}
     - target: {fileID: 3667361826476818639, guid: d7e5bc90912b3fc4ea2cca57811e59f0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -4.7248726
       objectReference: {fileID: 0}
     - target: {fileID: 3667361826476818639, guid: d7e5bc90912b3fc4ea2cca57811e59f0,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.7588677
+      value: -10.800535
       objectReference: {fileID: 0}
     - target: {fileID: 3667361826476818639, guid: d7e5bc90912b3fc4ea2cca57811e59f0,
         type: 3}
@@ -223,17 +223,17 @@ PrefabInstance:
     - target: {fileID: 3667361826476818639, guid: d7e5bc90912b3fc4ea2cca57811e59f0,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3667361826476818639, guid: d7e5bc90912b3fc4ea2cca57811e59f0,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3667361826476818639, guid: d7e5bc90912b3fc4ea2cca57811e59f0,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3667361826476818639, guid: d7e5bc90912b3fc4ea2cca57811e59f0,
         type: 3}
@@ -293,6 +293,7 @@ MonoBehaviour:
     type: 3}
   outline: {fileID: 8662255894091281763}
   virtualCamera: {fileID: 4369246401017603104}
+  itemToDisable: []
 --- !u!114 &8662255894091281763
 MonoBehaviour:
   m_ObjectHideFlags: 0

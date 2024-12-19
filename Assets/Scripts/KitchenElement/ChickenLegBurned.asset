@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df3ed63658ea97c438234c2593c73d70, type: 3}
+  m_Name: ChickenLegBurned
+  m_EditorClassIdentifier: 
+  name: Burnt Chicken
+  description: "du poul\xE9 brul\xE9"
+  prefab: {fileID: 6452247211107388847, guid: 21af09601cdb8d14d88d89466872f029, type: 3}
+  sprite: {fileID: 21300000, guid: d53c764edd7242845be7ebba9e6227eb, type: 3}
+  state: 0

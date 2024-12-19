@@ -49,13 +49,8 @@ public class ItemShowingInvMenuInWorld : Outlining
 
             if (forceOutline && outline.enabled)
             {
-                if (canvaInvItem.activeSelf == false/* || canvaInvItem.GetComponent<CanvaInvItemScript>().GetItem() != this*/)
+                if (canvaInvItem.activeSelf == false)
                 {
-                    /*DropItem testDropItem = this.GetComponent<DropItem>();
-                    if (testDropItem != null)
-                    {
-                        return;
-                    }*/
 
 
                     canvaInvItem.SetActive(true);

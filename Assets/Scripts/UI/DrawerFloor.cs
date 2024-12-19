@@ -9,4 +9,9 @@ public class DrawerFloor : MonoBehaviour
 
     public List<KitchenElement> KitchenElements => kitchenElements;
     public string GetName() => name;
+
+    public void AddKitchenElement(KitchenElement kitchenElement)
+    {
+        kitchenElements.Add(kitchenElement);
+    }
 }

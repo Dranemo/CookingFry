@@ -12,6 +12,16 @@ public class KitchenElement : ScriptableObject
     [SerializeField] Sprite sprite;
 
 
+    public enum KitchenElementState
+    {
+        normal,
+        cooked,
+        burned
+    }
+
+    [SerializeField] KitchenElementState state = KitchenElementState.normal;
+
+
     public string GetName()
     {
         return name;
@@ -29,5 +39,10 @@ public class KitchenElement : ScriptableObject
 
     public GameObject GetPrefab() {
         return prefab;
+    }
+
+    public KitchenElementState GetState()
+    {
+        return state;
     }
 }

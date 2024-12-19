@@ -10,12 +10,14 @@ public class CanvasDrawers : MonoBehaviour
 {
     List<DrawerFloor> floors;
     string name;
+    [SerializeField] bool canPutAwayItem = false;
 
 
     [Header("Pool")]
     [SerializeField] List<GameObject> tabs;
     [SerializeField] GameObject tabPrefab;
     [SerializeField] List<GameObject> itemCells;
+    List<GameObject> itemCellsActivated = new List<GameObject>();
     [SerializeField] GameObject itemCellPrefab;
 
 
@@ -131,6 +133,7 @@ public class CanvasDrawers : MonoBehaviour
             }
 
             itemCells[i].SetActive(true);
+            itemCellsActivated.Add(itemCells[i]);
 
             KitchenElement kitchenElement = floors[tabSelected].KitchenElements[i];
             ItemCellDrawer itemCell = itemCells[i].GetComponentInChildren<ItemCellDrawer>();
@@ -148,6 +151,7 @@ public class CanvasDrawers : MonoBehaviour
 
     private void Reset()
     {
+        isHandSelected = 2;
         desc.SetActive(false);
         tabs[tabSelected].GetComponent<Image>().color = unselectedTabColor;
         tabSelected = 0;
@@ -158,6 +162,7 @@ public class CanvasDrawers : MonoBehaviour
             item.GetComponentInChildren<ItemCellDrawer>().isOpened = false;
             item.GetComponent<Button>().onClick.RemoveAllListeners();
         }
+        itemCellsActivated.Clear();
 
     }
 
@@ -168,6 +173,10 @@ public class CanvasDrawers : MonoBehaviour
         {
             item.SetActive(false);
         }
+        foreach (var item in hands)
+        {
+            item.GetComponent<Image>().sprite = null;
+        }
     }
 
 
@@ -175,6 +184,7 @@ public class CanvasDrawers : MonoBehaviour
     ItemCellDrawer lastCell = null;
     void OpenDescription(ItemCellDrawer cell)
     {
+        isHandSelected = 2;
         if (desc.activeSelf && cell.isOpened)
         {
             desc.SetActive(false);
@@ -195,13 +205,66 @@ public class CanvasDrawers : MonoBehaviour
 
 
 
-
+    int isHandSelected = 2;
     void SetInHand(int index)
     {
         if(lastCell == null)
         {
+            if(isHandSelected == index)
+            {
+                if (canPutAwayItem)
+                {
+                    Inventory inventory = PlayerSingleton.instance.GetComponent<Inventory>();
+                    Food hand = inventory.GetHand(index);
+
+                    if (hand != null)
+                    {
+                        hands[index].GetComponent<Image>().sprite = null;
+
+                        floors[tabSelected].AddKitchenElement(hand.GetKitchenElement());
+
+                        inventory.SetHand(index, null);
+
+
+                        if (itemCellsActivated.Count >= itemCells.Count)
+                        {
+                            GameObject itemCellPre = Instantiate(itemCellPrefab, itemCells[0].transform.parent);
+                            itemCellPre.GetComponentInChildren<ItemCellDrawer>().Instanciation(descName, descDescription, descImage);
+
+                            itemCells.Add(itemCellPre);
+                        }
+
+                        itemCells[itemCellsActivated.Count].SetActive(true);
+                        itemCellsActivated.Add(itemCells[itemCellsActivated.Count]);
+
+                        KitchenElement kitchenElementhand = hand.GetKitchenElement();
+                        ItemCellDrawer itemCell = itemCells[itemCellsActivated.Count - 1].GetComponentInChildren<ItemCellDrawer>();
+
+                        itemCell.SetKitchenElement(kitchenElementhand);
+                        itemCells[itemCellsActivated.Count - 1].GetComponent<Button>().onClick.AddListener(() => OpenDescription(itemCell));
+
+                        Destroy(hand.gameObject);
+                    }
+                }
+            }
+            else
+                isHandSelected = index;
+
             return;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
         Inventory inv = PlayerSingleton.instance.GetComponent<Inventory>();
 
         if (inv.GetHand(index) != null)
@@ -209,9 +272,11 @@ public class CanvasDrawers : MonoBehaviour
 
         KitchenElement kitchenElement = lastCell.GetKitchenElement();
 
-        inv.SetHandPrefab(index, kitchenElement.GetPrefab());
+        inv.SetHandPrefab(index, kitchenElement);
 
 
         hands[index].GetComponent<Image>().sprite = inv.GetHand(index).GetKitchenElement().GetSprite();
+
+        OpenDescription(lastCell);
     }
 }

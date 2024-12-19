@@ -93,9 +93,27 @@ public class CanvaInvItemScript : MonoBehaviour
         Food food = item.GetComponent<Food>();
         if(food != null)
         {
+            GameObject prefab = food.GetKitchenElement().GetPrefab();
             PlayerSingleton.instance.GetComponent<Inventory>().SetHand(hand, food);
             return;
         }
+
+        Container container = item.GetComponent<Container>();
+        if (container != null)
+        {
+            Inventory inv = PlayerSingleton.instance.GetComponent<Inventory>();
+            Food handItem = inv.GetHand(hand);
+
+            if (handItem.CanBeCooked() && container.CanAddItem())
+            {
+                container.AddItem(handItem);
+
+                handItem.SetPosItemDrop(item.transform.position);
+                inv.SetHand(hand, null);
+            }
+            return;
+        }
+
 
         else
         {

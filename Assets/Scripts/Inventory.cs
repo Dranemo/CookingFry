@@ -57,13 +57,30 @@ public class Inventory : MonoBehaviour
         {
             food.GetComponent<Outline>().enabled = false;
 
-            GameObject duplicateFood = Instantiate(food.gameObject);
-            Food duplicateFoodFood = duplicateFood.GetComponent<Food>();
-            duplicateFoodFood.SetDefaultTransform(food.GetDefaultPos(), food.GetDefaultRot(), food.GetDefaultScale());
-            hands[hand] = duplicateFoodFood;
+            if(!food.alreadyCloned)
+            {
+                GameObject duplicateFood = Instantiate(food.gameObject);
+                Food duplicateFoodFood = duplicateFood.GetComponent<Food>();
+                duplicateFoodFood.alreadyCloned = true;
+                hands[hand] = duplicateFoodFood;
 
 
-            PositionFood(duplicateFoodFood, hand);
+                PositionFood(duplicateFoodFood, hand);
+            }
+            else
+            {
+                if(food.container != null)
+                {
+                    food.container.AddItem(null);
+                    food.container = null;
+                }
+
+                hands[hand] = food;
+                PositionFood(food, hand);
+
+
+            }
+            rtManager.CaptureRenderTexture(handTextures[hand], camPos, rotationTexture[hand], layerMask);
 
         }
         else
@@ -74,22 +91,30 @@ public class Inventory : MonoBehaviour
 
         }
     }
-    public void SetHandPrefab(int hand, GameObject foodPrefab)
+    public void SetHandPrefab(int hand, KitchenElement foodPrefabElement)
     {
-        if(hands[hand] != null && foodPrefab != null)
+        if(hands[hand] != null && foodPrefabElement != null)
         {
             Debug.Log("Bubup non");
             return;
         }
 
-        if (foodPrefab != null)
+        if (foodPrefabElement != null)
         {
-            GameObject duplicateFood = Instantiate(foodPrefab);
+            GameObject duplicateFood = Instantiate(foodPrefabElement.GetPrefab());
             Food duplicateFoodFood = duplicateFood.GetComponent<Food>();
+
+            if (foodPrefabElement.GetState() == KitchenElement.KitchenElementState.cooked)
+                duplicateFoodFood.SetCooked();
+            else if (foodPrefabElement.GetState() == KitchenElement.KitchenElementState.burned)
+                duplicateFoodFood.SetBurned();
+
+            duplicateFoodFood.alreadyCloned = true;
             hands[hand] = duplicateFoodFood;
 
 
             PositionFood(duplicateFoodFood, hand);
+
 
         }
         else

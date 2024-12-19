@@ -11,9 +11,13 @@ public class Oven : Table
     [SerializeField] ParticleSystem particleSystem;
     [SerializeField] TextMeshProUGUI hotnessText;
 
+    float hotValue = 0;
 
-    private void Awake()
+
+    new private void Awake()
     {
+        base.Awake();
+
         slider.onValueChanged.AddListener((float value) => HeatUp(value));
         itemToDisable.Add(slider.gameObject);
         slider.gameObject.SetActive(false);
@@ -22,6 +26,8 @@ public class Oven : Table
 
     void HeatUp(float value)
     {
+        hotValue = value;
+
         button.transform.rotation = Quaternion.Euler(0, 0, 50 + value);
         hotnessText.text = value.ToString("F0") + '°';
 
@@ -31,5 +37,10 @@ public class Oven : Table
         var emission = particleSystem.emission;
         emission.rateOverTime = value / 10;
 
+    }
+
+    public float ReturnHotValue()
+    {
+        return hotValue;
     }
 }

@@ -59,6 +59,7 @@ public class Inventory : MonoBehaviour
 
             GameObject duplicateFood = Instantiate(food.gameObject);
             Food duplicateFoodFood = duplicateFood.GetComponent<Food>();
+            duplicateFoodFood.SetDefaultTransform(food.GetDefaultPos(), food.GetDefaultRot(), food.GetDefaultScale());
             hands[hand] = duplicateFoodFood;
 
 
@@ -68,6 +69,9 @@ public class Inventory : MonoBehaviour
         else
         { 
             hands[hand] = null;
+
+            rtManager.CaptureRenderTexture(handTextures[hand], camPos, rotationTexture[hand], layerMask);
+
         }
     }
     public void SetHandPrefab(int hand, GameObject foodPrefab)
@@ -91,6 +95,8 @@ public class Inventory : MonoBehaviour
         else
         { 
             hands[hand] = null;
+
+            rtManager.CaptureRenderTexture(handTextures[hand], camPos, rotationTexture[hand], layerMask);
         }
     }
 

@@ -9,6 +9,9 @@ public class ItemShowingInvMenuInWorld : Outlining
 {
 
     protected bool forceOutline = false;
+    protected bool showEveryHandOption = true;
+    protected bool addItem = true;
+
     protected GameObject canvaInvItem;
 
 
@@ -35,8 +38,6 @@ public class ItemShowingInvMenuInWorld : Outlining
 
     protected void Update()
     {
-        if (outline == null)
-            return;
 
 
         if (isOutlined || forceOutline)
@@ -48,10 +49,17 @@ public class ItemShowingInvMenuInWorld : Outlining
 
             if (forceOutline && outline.enabled)
             {
-                if (canvaInvItem.activeSelf == false)
+                if (canvaInvItem.activeSelf == false/* || canvaInvItem.GetComponent<CanvaInvItemScript>().GetItem() != this*/)
                 {
+                    /*DropItem testDropItem = this.GetComponent<DropItem>();
+                    if (testDropItem != null)
+                    {
+                        return;
+                    }*/
+
+
                     canvaInvItem.SetActive(true);
-                    canvaInvItem.GetComponent<CanvaInvItemScript>().SetItem(this);
+                    canvaInvItem.GetComponent<CanvaInvItemScript>().SetItem(this, showEveryHandOption, addItem);
                 }
             }
             return;

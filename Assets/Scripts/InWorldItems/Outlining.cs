@@ -12,7 +12,7 @@ public class Outlining : MonoBehaviour
 
     protected bool isOutlined = false;
 
-    private void Awake()
+    protected void Awake()
     {
         interact.action.performed += Interact;
         interact.action.Enable();

@@ -6,15 +6,16 @@ using UnityEngine.InputSystem;
 public class DropItem : ItemShowingInvMenuInWorld
 {
     static public DropItem instance;
+    Vector3 pos;
 
-    bool hit = false;
-    Vector3 pos = Vector3.zero;
-
-    private void Awake()
+    new private void Awake()
     {
-        instance = this;
-    }
+        base.Awake();
 
+        instance = this;
+        showEveryHandOption = false;
+        addItem = false;
+    }
 
     protected override void Interact(InputAction.CallbackContext context)
     {
@@ -22,34 +23,36 @@ public class DropItem : ItemShowingInvMenuInWorld
         {
             return;
         }
-
-
-        if (hit)
-        {
-            showCanvas();
-        }
-        else
+        if (forceOutline && !isOutlined)
         {
             canvaInvItem.GetComponent<CanvaInvItemScript>().SetItem(null);
             canvaInvItem.SetActive(false);
+
+            forceOutline = false;
+            SetHit(false, Vector3.zero);
+            return;
+        }
+
+
+        if (isOutlined)
+        {
+            SetPos();
+            forceOutline = true;
         }
     }
 
 
     public void SetHit(bool _hit, Vector3 _pos)
     {
-        hit = _hit;
+        SetOutlineBool(_hit);
         pos = _pos;
     }
 
 
-
-
-    public void showCanvas()
+    void SetPos()
     {
-        transform.position = pos;
+        transform.position = pos + Vector3.up * 0.3f;
 
-        canvaInvItem.GetComponent<CanvaInvItemScript>().SetItem(this, false);
-        canvaInvItem.SetActive(true);
+        canvaInvItem.GetComponent<CanvaInvItemScript>().SetItem(this, showEveryHandOption, addItem);
     }
 }

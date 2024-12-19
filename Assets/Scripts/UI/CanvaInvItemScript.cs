@@ -10,6 +10,7 @@ public class CanvaInvItemScript : MonoBehaviour
 
     ItemShowingInvMenuInWorld item = null;
     bool showBothButton = true;
+    bool addItem = true;
 
     public static CanvaInvItemScript instance;
 
@@ -33,31 +34,39 @@ public class CanvaInvItemScript : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void SetItem(ItemShowingInvMenuInWorld _item, bool _showBothButton = true)
+    public void SetItem(ItemShowingInvMenuInWorld _item, bool _showBothButton = true, bool _addItem = true)
     {
         item = _item;
+        showBothButton = _showBothButton;
+        addItem = _addItem;
 
-        if(item != null)
+        if (item != null)
         {
             SetPosition();
+            SetButton();
         }
-
-
-
-        
     }
 
 
-    private void OnEnable()
+    private void SetButton()
     {
         if (!showBothButton)
         {
             Inventory inv = PlayerSingleton.instance.GetComponent<Inventory>();
-            if (inv.GetHand(0) != null)
+            if (inv.GetHand(0) == null && addItem)
+            {
+                leftHandButton.gameObject.SetActive(true);
+            }else if (inv.GetHand(0) == null)
             {
                 leftHandButton.gameObject.SetActive(false);
             }
-            if (inv.GetHand(1) != null)
+
+
+            if (inv.GetHand(1) == null && addItem)
+            {
+                rightHandButton.gameObject.SetActive(true);
+            }
+            else if (inv.GetHand(1) == null)
             {
                 rightHandButton.gameObject.SetActive(false);
             }
@@ -93,9 +102,9 @@ public class CanvaInvItemScript : MonoBehaviour
             Inventory inv = PlayerSingleton.instance.GetComponent<Inventory>();
             Food handItem = inv.GetHand(hand);
 
-            inv.SetHand(hand, null);
 
             handItem.SetPosItemDrop(item.transform.position);
+            inv.SetHand(hand, null);
         }
 
     }
@@ -107,5 +116,11 @@ public class CanvaInvItemScript : MonoBehaviour
         transform.position = item.transform.position + offset;
 
         transform.LookAt(Camera.main.transform);
+    }
+
+
+    public ItemShowingInvMenuInWorld GetItem()
+    {
+        return item;
     }
 }

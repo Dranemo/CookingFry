@@ -16,14 +16,16 @@ public class Food : ItemShowingInvMenuInWorld
     Quaternion defaultTransformRot;
     Vector3 defaultTransformScale;
 
-    new private void Start()
+    new private void Awake()
     {
-        base.Start();
+        base.Awake();
 
         defaultTransformPos = transform.position;
         defaultTransformRot = transform.rotation;
         defaultTransformScale = transform.localScale;
     }
+
+    
 
 
     protected override void Interact(InputAction.CallbackContext context)
@@ -62,7 +64,7 @@ public class Food : ItemShowingInvMenuInWorld
     
     public void ResetTransform()
     {
-        transform.position = defaultTransformPos;
+        //transform.position = defaultTransformPos;
         transform.rotation = defaultTransformRot;
         transform.localScale = defaultTransformScale;
     }
@@ -72,11 +74,34 @@ public class Food : ItemShowingInvMenuInWorld
     }
     public void SetPosItemDrop(Vector3 pos)
     {
+        ResetTransform();
         transform.position = pos + Vector3.up * upOffset;
     }
 
     public KitchenElement GetKitchenElement()
     {
         return kitchenElement;
+    }
+
+
+
+    public void SetDefaultTransform (Vector3 pos, Quaternion rot, Vector3 scale)
+    {
+        defaultTransformPos = pos;
+        defaultTransformRot = rot;
+        defaultTransformScale = scale;
+    }
+
+    public Quaternion GetDefaultRot()
+    {
+        return defaultTransformRot;
+    }
+    public Vector3 GetDefaultPos()
+    {
+        return defaultTransformPos;
+    }
+    public Vector3 GetDefaultScale()
+    {
+        return defaultTransformScale;
     }
 }

@@ -63,6 +63,7 @@ public class PlayerSeeTable : MonoBehaviour
 
         if (raycast)
         {
+            DropItem.instance.SetHit(raycastDrop, Vector3.zero);
             Outlining outliningItem = hit.collider.GetComponent<Outlining>();
 
 
@@ -87,6 +88,9 @@ public class PlayerSeeTable : MonoBehaviour
         }
         else
         {
+            Debug.Log("Le raycast n'a touché aucun objet.");
+
+
             if (lastOutliningItem != null)
             {
                 lastOutliningItem.SetOutlineBool(false);
@@ -98,12 +102,13 @@ public class PlayerSeeTable : MonoBehaviour
                 if (raycastDrop) // Vérification si le raycast de drop a touché quelque chose
                 {
                     Vector3 hitPos = hitDrop.point;
-                    Debug.Log("Position d'impact du drop: " + hitPos);
+                    //Debug.Log("Position d'impact du drop: " + hitPos);
 
                     DropItem.instance.SetHit(raycastDrop, hitPos);
                 }
                 else
                 {
+                    DropItem.instance.SetHit(raycastDrop, Vector3.zero);
                     Debug.Log("Le raycast de drop n'a touché aucun objet.");
                 }
             }

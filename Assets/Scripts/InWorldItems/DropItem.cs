@@ -57,7 +57,7 @@ public class DropItem : ItemShowingInvMenuInWorld
 
     void SetPos()
     {
-        transform.position = pos + Vector3.up * 0.3f;
+        transform.position = pos;
 
         canvaInvItem.GetComponent<CanvaInvItemScript>().SetItem(this, showEveryHandOption, addItem);
     }

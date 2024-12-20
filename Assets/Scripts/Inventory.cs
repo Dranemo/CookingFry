@@ -1,10 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
-using UnityEngine.UI;
-using Unity.VisualScripting;
-using UnityEngine.XR;
 
 public class Inventory : MonoBehaviour
 {

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -25,6 +24,7 @@ public class RecipeBook : MonoBehaviour
     [SerializeField] GameObject bookCanvas;
 
     [SerializeField] Outlining Support;
+    [SerializeField] GameObject pen;
 
     private int currentPage = 0;
 
@@ -95,8 +95,13 @@ public class RecipeBook : MonoBehaviour
             bookCanvas.GetComponent<GraphicRaycaster>().enabled = false;
             Support.IsInteractButtonEnabled(false);
 
+            foreach (Transform child in pen.transform)
+            {
+                child.GetComponent<MeshCollider>().enabled = false;
+            }
+
             recipeCanvas.SetActive(true);   
-            recipeCanvas.GetComponent<RecipeCanvas>().PrintOnPage(recipes[page], Support);
+            recipeCanvas.GetComponent<RecipeCanvas>().PrintOnPage(recipes[page], Support, pen);
         }
     }
 

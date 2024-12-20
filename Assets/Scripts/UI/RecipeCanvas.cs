@@ -1,9 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class RecipeCanvas : MonoBehaviour
@@ -13,6 +10,7 @@ public class RecipeCanvas : MonoBehaviour
     [SerializeField] GameObject bookCanvas;
 
     Outlining support;
+    GameObject penScript;
 
 
     private void OnEnable()
@@ -26,9 +24,10 @@ public class RecipeCanvas : MonoBehaviour
 
 
 
-    public void PrintOnPage(Recipe recipe, Outlining _support)
+    public void PrintOnPage(Recipe recipe, Outlining _support, GameObject _penScript)
     {
         support = _support;
+        penScript = _penScript;
 
         texts[0].text = recipe.GetRecipeTitle();
         texts[1].text = recipe.GetRecipeIngredients();
@@ -40,5 +39,10 @@ public class RecipeCanvas : MonoBehaviour
         bookCanvas.GetComponent<GraphicRaycaster>().enabled = true;
         support.IsInteractButtonEnabled(true);
         gameObject.SetActive(false);
+
+        foreach (Transform child in penScript.transform)
+        {
+            child.GetComponent<MeshCollider>().enabled = true;
+        }
     }
 }

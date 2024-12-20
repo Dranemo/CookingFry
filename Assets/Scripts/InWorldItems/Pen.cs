@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -10,9 +8,11 @@ public class Pen : Outlining
     [SerializeField] GameObject bookCanvas;
     [SerializeField] Outlining support;
 
+    [SerializeField] GameObject pen;
+
     protected override void Interact(InputAction.CallbackContext context)
     {
-        if(isOutlined)
+        if (isOutlined)
         {
             bookCanvas.GetComponent<GraphicRaycaster>().enabled = false;
             support.IsInteractButtonEnabled(false);
@@ -20,6 +20,11 @@ public class Pen : Outlining
 
             CanvaNewRecipe.SetActive(true);
             SetOutlineBool(false);
+
+            foreach (Transform child in pen.transform)
+            {
+                    child.GetComponent<MeshCollider>().enabled = false;
+            }
         }
     }
 }

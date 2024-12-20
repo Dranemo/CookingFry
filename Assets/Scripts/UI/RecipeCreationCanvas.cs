@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,6 +22,9 @@ public class RecipeCreationCanvas : MonoBehaviour
     [SerializeField] RecipeBook recipeBook;
     [SerializeField] GameObject bookCanvas;
     Outlining support;
+
+
+    [SerializeField] GameObject penScript;
 
 
     private void Start()
@@ -49,7 +50,7 @@ public class RecipeCreationCanvas : MonoBehaviour
                 dropdownIngredients[i].options.Add(new TMP_Dropdown.OptionData(item.GetName(), item.GetSprite()));
             }
 
-            int index = 1;
+            int index = i;
             dropdownIngredients[i].onValueChanged.AddListener((value) => SelectIngredient(index, value));
         }
 
@@ -155,5 +156,10 @@ public class RecipeCreationCanvas : MonoBehaviour
         bookCanvas.GetComponent<GraphicRaycaster>().enabled = true;
         support.IsInteractButtonEnabled(true);
         gameObject.SetActive(false);
+
+        foreach(Transform child in penScript.transform)
+        {
+            child.GetComponent<MeshCollider>().enabled = true;
+        }
     }
 }

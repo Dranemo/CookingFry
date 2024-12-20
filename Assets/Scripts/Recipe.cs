@@ -70,5 +70,11 @@ public class Recipe : ScriptableObject
 
 
 
-
+    public Recipe(string _recipeName, List<KitchenElement> _ingredients, string _instructions, Sprite _sprite)
+    {
+        recipeName = _recipeName;
+        ingredients = _ingredients;
+        instructions = _instructions;
+        sprite = _sprite;
+    }
 }

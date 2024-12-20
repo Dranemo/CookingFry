@@ -152,6 +152,7 @@ public class CanvasDrawers : MonoBehaviour
     private void Reset()
     {
         isHandSelected = 2;
+        lastCell = null;
         desc.SetActive(false);
         tabs[tabSelected].GetComponent<Image>().color = unselectedTabColor;
         tabSelected = 0;
@@ -210,7 +211,9 @@ public class CanvasDrawers : MonoBehaviour
     {
         if(lastCell == null)
         {
-            if(isHandSelected == index)
+            Debug.Log("ItemInHandPutAway: "+index);
+
+            if (isHandSelected == index)
             {
                 if (canPutAwayItem)
                 {

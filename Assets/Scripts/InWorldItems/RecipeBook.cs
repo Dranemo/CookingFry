@@ -118,4 +118,12 @@ public class RecipeBook : MonoBehaviour
             sprite.enabled = true;
         sprite.sprite = recipes[page].GetSprite();
     }
+
+    public void AddRecipe(Recipe recipe)
+    {
+        recipes.Add(recipe);
+
+        currentPage -= 2;
+        NextPage();
+    }
 }
